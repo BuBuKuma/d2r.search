@@ -61,9 +61,7 @@
                     const type = row[0];
                     row.shift();  
                     for (let i = 0; i < row.length; i += 3) {
-                        if (row[i].toLowerCase().includes(query) ||
-                            row[i + 1].toLowerCase().includes(query) ||
-                            row[i + 2].toLowerCase().includes(query)) {
+                        if (row[i].toLowerCase().includes(query)) {
                             filteredRows.push([row[i], row[i + 1], type, row[i + 2]]);
                         }
                     }
