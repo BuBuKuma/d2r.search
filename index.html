@@ -11,7 +11,17 @@
     <div class="container">
         <h1 class="mt-5">Google Sheets Search</h1>
         <input id="searchInput" class="form-control mt-3" type="text" placeholder="輸入關鍵字搜尋...">
-        <ul id="resultsList" class="list-group mt-3"></ul>
+        <table id="resultsTable" class="table table-striped mt-3">
+            <thead>
+                <tr>
+                    <th>名稱</th>
+                    <th>素質</th>
+                    <th>位置</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
     </div>
 
     <script>
@@ -40,28 +50,30 @@
         function initSearch() {
             $('#searchInput').on('input', function() {
                 const query = $(this).val().toLowerCase();
-                const filteredRows = allRows.filter(row => {
+                const filteredRows = [];
+
+                allRows.forEach(row => {
                     for (let i = 0; i < row.length; i += 3) {
                         if (row[i].toLowerCase().includes(query) ||
                             row[i + 1].toLowerCase().includes(query) ||
                             row[i + 2].toLowerCase().includes(query)) {
-                            return true;
+                            filteredRows.push([row[i], row[i + 1], row[i + 2]]);
                         }
                     }
-                    return false;
                 });
 
-                $('#resultsList').empty();
+                // 清空表格
+                $('#resultsTable tbody').empty();
+
+                // 添加篩選後的結果
                 filteredRows.forEach(row => {
-                    for (let i = 0; i < row.length; i += 3) {
-                        $('#resultsList').append(`
-                            <li class="list-group-item">
-                                <strong>名稱:</strong> ${row[i]}<br>
-                                <strong>素質:</strong> ${row[i + 1]}<br>
-                                <strong>位置:</strong> ${row[i + 2]}
-                            </li>
-                        `);
-                    }
+                    $('#resultsTable tbody').append(`
+                        <tr>
+                            <td>${row[0]}</td>
+                            <td>${row[1]}</td>
+                            <td>${row[2]}</td>
+                        </tr>
+                    `);
                 });
             });
         }
