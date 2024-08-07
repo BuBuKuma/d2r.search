@@ -42,7 +42,6 @@
                             const data = sheetData.split('\n').map((row) => {
                                 return [name].concat(row.split(','))
                             });
-                            data.push();
                             allRows = allRows.concat(data);
                         });
                     }
