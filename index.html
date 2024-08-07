@@ -34,8 +34,10 @@
         // 從所有工作表讀取資料  
         function fetchData() {
             $.get(mainURL, function(main) {
-                const url = main[0].split('\n').map(row => row.split(','));
-                sheetURLs = sheetURLs.concat(url[1]);
+                const url = main.split('\n').map(row => row.split(','));
+                if(url[0] != '工作表' && url[0] != '紀錄'){
+                    sheetURLs = sheetURLs.concat(url[1]);
+                }
                 $.when.apply($, sheetURLs).done(function() {
                     Array.prototype.slice.call(arguments).forEach(response => {
                         const data = response[0].split('\n').map(row => row.split(','));
