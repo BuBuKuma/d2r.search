@@ -16,6 +16,7 @@
                 <tr>
                     <th>名稱</th>
                     <th>素質</th>
+                    <th>類型</th>
                     <th>位置</th>
                 </tr>
             </thead>
@@ -27,8 +28,6 @@
     <script>
         // 多個工作表的 CSV 連結
         const mainURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR_iT8Z082SrWOtPxoKwO4G_C89MPM5Q4i4-RzHDt_zyXiQsI9QTu8AJ5IQRaETGJL1FygOPu9aimmB/pub?gid=2005473659&single=true&output=csv';
-
-
         let allRows = [];
 
         // 從所有工作表讀取資料  
@@ -40,8 +39,10 @@
                     const url = sheet[1];
                     if(name != '工作表' && name != '紀錄'){
                         $.get(url, function(sheetData) {
-                            const data = [name];
-                            data.push(sheetData.split('\n').map(row => row.split(',')));
+                            const data = sheetData.split('\n').map((row) => {
+                                return [name].concat(row.split(','))
+                            });
+                            data.push();
                             allRows = allRows.concat(data);
                         });
                     }
@@ -62,7 +63,7 @@
                         if (row[i].toLowerCase().includes(query) ||
                             row[i + 1].toLowerCase().includes(query) ||
                             row[i + 2].toLowerCase().includes(query)) {
-                            filteredRows.push([row[i], row[i + 1], row[i + 2]]);
+                            filteredRows.push([row[i], row[i + 1], row[i + 2]], row[i + 3]);
                         }
                     }
                 });
@@ -74,9 +75,10 @@
                 filteredRows.forEach(row => {
                     $('#resultsTable tbody').append(`
                         <tr>
-                            <td>${row[0]}</td>
                             <td>${row[1]}</td>
                             <td>${row[2]}</td>
+                            <td>${row[0]}</td>
+                            <td>${row[3]}</td>
                         </tr>
                     `);
                 });
