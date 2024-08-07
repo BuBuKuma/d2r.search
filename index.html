@@ -33,7 +33,7 @@
 
         // 從所有工作表讀取資料  
         function fetchData() {
-            $.get('mainURL', function(main) {
+            $.get(mainURL, function(main) {
                 const url = main[0].split('\n').map(row => row.split(','));
                 sheetURLs = sheetURLs.concat(url[1]);
                 $.when.apply($, sheetURLs).done(function() {
