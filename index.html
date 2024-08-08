@@ -33,13 +33,13 @@
         // 從所有工作表讀取資料  
         function fetchData() {
             $.get(mainURL, function(mainData) {
-                const sheets = mainData.split('\n').map(row => row.split(','));
+                const sheets = mainData.split('\r\n').map(row => row.split(','));
                 sheets.forEach((sheet) => {
                     const name = sheet[0];
                     const url = sheet[1];
                     if(name != '工作表' && name != '紀錄'){
                         $.get(url, function(sheetData) {
-                            const data = sheetData.split('\n');
+                            const data = sheetData.split('\r\n');
                             data.map((row) => {
                                 return [name].concat(row.split(','))
                             });
