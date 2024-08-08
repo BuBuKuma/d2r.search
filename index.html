@@ -62,7 +62,9 @@
                     const _row = row.slice(1, -1);
                     for (let i = 0; i < _row.length; i += 3) {
                         if (_row[i].toLowerCase().includes(query)) {
-                            filteredRows.push([_row[i], _row[i + 1], type, _row[i + 2]]);
+                            if([_row[i]){
+                                filteredRows.push([_row[i], _row[i + 1] || '', type, _row[i + 2] || '']);
+                            }
                         }
                     }
                 });
