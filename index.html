@@ -39,8 +39,7 @@
                     const url = sheet[1];
                     if(name != '工作表' && name != '紀錄'){
                         $.get(url, function(sheetData) {
-                            const data = sheetData.split('\r\n');
-                            data.map((row) => {
+                            const data = sheetData.split('\r\n').map((row) => {
                                 return [name].concat(row.split(','))
                             });
                             allRows = allRows.concat(data);
