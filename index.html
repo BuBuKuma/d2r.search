@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="mt-5">D2R Search</h1>
+        <h1 class="mt-5" data-toggle="tooltip" data-placement="right" title="給我自己方便查找的工具 @neil.hsiao.1986">D2R Search</h1>
         <input id="searchInput" class="form-control mt-3" type="text" placeholder="輸入關鍵字搜尋...">
         <table id="resultsTable" class="table table-hover mt-3">
             <thead>
@@ -27,11 +27,13 @@
     </div>
 
     <script>
-        // 多個工作表的 CSV 連結
+        $(function () {
+          $('[data-toggle="tooltip"]').tooltip()
+        })
+        
         const mainURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR_iT8Z082SrWOtPxoKwO4G_C89MPM5Q4i4-RzHDt_zyXiQsI9QTu8AJ5IQRaETGJL1FygOPu9aimmB/pub?gid=2005473659&single=true&output=csv';
         let allRows = [];
 
-        // 從所有工作表讀取資料  
         function fetchData() {
             $.get(mainURL, function(mainData) {
                 const sheets = mainData.split('\r\n').map(row => row.split(','));
@@ -48,7 +50,6 @@
                     }
                 });
 
-                // 初始化搜尋功能
                 initSearch();
             });
         }
@@ -70,10 +71,8 @@
                     }
                 });
 
-                // 清空表格
                 $('#resultsTable tbody').empty();
 
-                // 添加篩選後的結果
                 filteredRows.forEach(row => {
                     if(row[1]?.startsWith('*')){
                         $('#resultsTable tbody').append(`
