@@ -161,6 +161,9 @@
         }
 
         function initSearch(rows) {
+            $("#searchInput").click(function(){
+                $(this).val('');
+            });
             $('#searchInput').on('input', function() {
                 const query = $(this).val().toLowerCase();
                 search(rows, query);
